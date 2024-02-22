@@ -1,6 +1,0 @@
-package pomo
-
-import _ "embed"
-
-//go:embed text/start.md
-var _start string
