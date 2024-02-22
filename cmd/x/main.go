@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kmjayadeep/x/pkg/git"
+	"github.com/kmjayadeep/x/pkg/weather"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
 	"github.com/rwxrob/pomo"
@@ -20,10 +21,15 @@ var Cmd = &Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
 		git.Cmd,
+		weather.Cmd,
 	},
-  Shortcuts: Z.ArgMap{
-    "pull": {"git", "pull"},
-    "push": {"git", "push"},
-    "pushf": {"git", "push", "force"},
-  },
+	Shortcuts: Z.ArgMap{
+		// Git
+		"pull":  {"git", "pull"},
+		"push":  {"git", "push"},
+		"pushf": {"git", "push", "force"},
+
+		// Weather
+		"weat": {"weather", "basic"},
+	},
 }

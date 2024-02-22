@@ -17,25 +17,25 @@ var Cmd = &Z.Cmd{
 var pushCmd = &Z.Cmd{
 	Name:     `push`,
 	Summary:  `Push current branch to git`,
-  Usage: `[help|force]`,
-  MaxArgs: 1,
-  Params: []string{"force"},
+	Usage:    `[help|force]`,
+	MaxArgs:  1,
+	Params:   []string{"force"},
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(x *Z.Cmd, args ...string) error {
-    force := ""
-    if len(args) > 0 && args[0] == "force"{
-      force = "-f"
+		force := ""
+		if len(args) > 0 && args[0] == "force" {
+			force = "-f"
 		}
 		branch := Z.Out("git", "rev-parse", "--abbrev-ref", "HEAD")
-    if force != "" {
-      if err := Z.Exec("git", "push", "origin", strings.TrimSpace(branch), force); err != nil {
-        return err
-      }
-    } else {
-      if err := Z.Exec("git", "push", "origin", strings.TrimSpace(branch)); err != nil {
-        return err
-      }
-    }
+		if force != "" {
+			if err := Z.Exec("git", "push", "origin", strings.TrimSpace(branch), force); err != nil {
+				return err
+			}
+		} else {
+			if err := Z.Exec("git", "push", "origin", strings.TrimSpace(branch)); err != nil {
+				return err
+			}
+		}
 		commit := Z.Out("git", "log", "--oneline", "HEAD^..HEAD")
 		fmt.Printf("pushed to %s\nlast commit:%s\n", branch, commit)
 		return nil
@@ -48,9 +48,9 @@ var pullCmd = &Z.Cmd{
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(x *Z.Cmd, args ...string) error {
 		branch := Z.Out("git", "rev-parse", "--abbrev-ref", "HEAD")
-    if err := Z.Exec("git", "pull", "origin", strings.TrimSpace(branch)); err != nil {
-      return err
-    }
+		if err := Z.Exec("git", "pull", "origin", strings.TrimSpace(branch)); err != nil {
+			return err
+		}
 		return nil
 	},
 }
