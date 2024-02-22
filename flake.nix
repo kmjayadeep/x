@@ -1,5 +1,5 @@
 {
-  description = "Go example flake for Zero to Nix";
+  description = "JD's bonzai command tree";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

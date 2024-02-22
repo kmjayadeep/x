@@ -1,9 +1,20 @@
 package main
 
 import (
-	"fmt"
+	"github.com/kmjayadeep/x/pkg/pomo"
+	Z "github.com/rwxrob/bonzai/z"
+	"github.com/rwxrob/help"
 )
 
 func main() {
-  fmt.Println("hello world")
+  Cmd.Run()
+}
+
+var Cmd = &Z.Cmd{
+  Name: "x",
+  Summary: "JD's bonzai command tree",
+  Commands: []*Z.Cmd{
+    help.Cmd,
+    pomo.Cmd,
+  },
 }

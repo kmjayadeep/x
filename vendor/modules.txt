@@ -1,0 +1,48 @@
+# github.com/rwxrob/bonzai v0.20.10
+## explicit; go 1.18
+github.com/rwxrob/bonzai
+github.com/rwxrob/bonzai/z
+# github.com/rwxrob/compcmd v0.3.0
+## explicit; go 1.18
+github.com/rwxrob/compcmd
+# github.com/rwxrob/fn v0.3.3
+## explicit; go 1.18
+github.com/rwxrob/fn
+github.com/rwxrob/fn/each
+github.com/rwxrob/fn/filt
+github.com/rwxrob/fn/mapf
+github.com/rwxrob/fn/maps
+github.com/rwxrob/fn/redu
+# github.com/rwxrob/help v0.7.2
+## explicit; go 1.18
+github.com/rwxrob/help
+# github.com/rwxrob/pegn v0.1.0
+## explicit; go 1.18
+github.com/rwxrob/pegn
+github.com/rwxrob/pegn/ast
+github.com/rwxrob/pegn/curs
+github.com/rwxrob/pegn/qstack
+github.com/rwxrob/pegn/scanner
+# github.com/rwxrob/structs v0.6.0
+## explicit; go 1.18
+github.com/rwxrob/structs/qstack
+github.com/rwxrob/structs/set/text/set
+# github.com/rwxrob/term v0.2.8
+## explicit; go 1.18
+github.com/rwxrob/term
+github.com/rwxrob/term/esc
+# github.com/rwxrob/to v0.11.2
+## explicit; go 1.18
+github.com/rwxrob/to
+# golang.org/x/crypto v0.3.0
+## explicit; go 1.17
+golang.org/x/crypto/ssh/terminal
+# golang.org/x/sys v0.2.0
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/term v0.2.0
+## explicit; go 1.17
+golang.org/x/term
