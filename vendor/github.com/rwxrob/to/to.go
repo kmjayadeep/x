@@ -187,6 +187,8 @@ func Prefixed(in, pre string) string {
 	return strings.Join(lines, "\n")
 }
 
+var isblank = regexp.MustCompile(`^\s*$`)
+
 // Dedented discards any initial blank lines with nothing but whitespace in
 // them and then detects the number and type of whitespace characters at
 // the beginning of the first line to the first non-whitespace rune and
@@ -197,8 +199,10 @@ func Prefixed(in, pre string) string {
 // up to the content creator to ensure that all lines have the same
 // space indentation.
 func Dedented(in string) string {
-	isblank := regexp.MustCompile(`^\s*$`)
 	lines := Lines(in)
+	for len(lines) == 1 && isblank.MatchString(lines[0]) {
+		return ""
+	}
 	var n int
 	for len(lines[n]) == 0 || isblank.MatchString(lines[n]) {
 		n++
@@ -277,7 +281,7 @@ func Words(it string) string {
 // 1 will simply trim and crunch white space returning essentially the
 // same string and the word count.  If the width is less than any given
 // word at the start of a line than it will be the only word on the line
-// even if the word length exceeds the width. Non attempt at
+// even if the word length exceeds the width. No attempt at
 // word-hyphenation is made. Note that white space is defined as
 // unicode.IsSpace and does not include control characters. Anything
 // that is not unicode.IsSpace or unicode.IsGraphic will be ignored in
@@ -412,3 +416,62 @@ func HTTPS(url string) string {
 	}
 	return url
 }
+
+// CrunchSpace crunches all unicode.IsSpace into a single space. It does
+// not trim. See TrimCrunchSpace.
+func CrunchSpace(in string) string {
+	runes := make([]rune, 0)
+	s := scanner.New(in)
+	var inspace bool
+	for s.Scan() {
+		r := s.Rune()
+		if unicode.IsSpace(r) {
+			if inspace {
+				continue
+			}
+			runes = append(runes, ' ')
+			inspace = true
+			continue
+		}
+		inspace = false
+		runes = append(runes, r)
+	}
+	return string(runes)
+}
+
+// CrunchSpaceVisible crunches all unicode.IsSpace into a single space
+// and filters out anything that is not unicode.IsPrint. It does not
+// trim. See TrimCrunchSpaceVisible. Note that this requires three
+// passes through the string in order to resolve any white space that
+// might have been separated by escape and other characters.
+func CrunchSpaceVisible(in string) string {
+	in = CrunchSpace(in)
+	in = Visible(in)
+	in = CrunchSpace(in)
+	return in
+}
+
+// Visible filters out any rune that is not unicode.IsPrint().
+func Visible(in string) string {
+	runes := make([]rune, 0)
+	s := scanner.New(in)
+	for s.Scan() {
+		r := s.Rune()
+		if unicode.IsPrint(r) {
+			runes = append(runes, r)
+		}
+	}
+	return string(runes)
+}
+
+// TrimVisible removes anything but unicode.IsPrint and then trims. It
+// does not crunch spaces, however.
+func TrimVisible(in string) string { return strings.TrimSpace(Visible(in)) }
+
+// TrimCrunchSpace is same as CrunchSpace but trims initial and trailing
+// space.
+func TrimCrunchSpace(in string) string { return strings.TrimSpace(CrunchSpace(in)) }
+
+// TrimCrunchSpaceVisible is same as CrunchSpaceVisible but trims initial and trailing
+// space.
+func TrimCrunchSpaceVisible(in string) string { return strings.TrimSpace(CrunchSpaceVisible(in)) }

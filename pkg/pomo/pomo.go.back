@@ -1,0 +1,56 @@
+package pomo
+
+import (
+	Z "github.com/rwxrob/bonzai/z"
+	"github.com/rwxrob/help"
+)
+
+var (
+	Duration   = "30m"
+	Interval   = "20s"
+	Warn       = "1m"
+	Prefix     = "🍅"
+	PrefixWarn = "💢"
+)
+
+var Cmd = &Z.Cmd{
+	Name: `pomo`,
+	Commands: []*Z.Cmd{
+		help.Cmd,
+	},
+}
+
+var startCmd = &Z.Cmd{
+	Name:        `start`,
+	Usage:       `[help|hour|DURATION]`,
+	Commands:    []*Z.Cmd{help.Cmd},
+	Params:      []string{`hour`},
+	MaxArgs:     1,
+	Summary:     help.S(_start),
+	Description: help.D(_start),
+
+	Call: func(x *Z.Cmd, args ...string) error {
+		if len(args) > 0 {
+			if args[0] == `hour` {
+				t := time.Now()
+				args[0] = dtime.Until(dtime.NextHourOf, &t).String()
+			}
+			if err := x.Caller.Set("duration", args[0]); err != nil {
+				return err
+			}
+		}
+		s, err := x.Caller.Get("duration")
+		if err != nil {
+			return err
+		}
+		if s == "" {
+			s = Duration
+		}
+		dur, err := time.ParseDuration(s)
+		if err != nil {
+			return err
+		}
+		started := time.Now().Add(dur).Format(time.RFC3339)
+		return x.Caller.Set("started", started)
+	},
+}

@@ -26,6 +26,9 @@
           name = "x";
           src = ./.;
           vendorHash = null;
+          subPackages = [
+            "cmd/x"
+          ];
         };
       });
     };
