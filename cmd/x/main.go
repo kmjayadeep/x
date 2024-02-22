@@ -21,4 +21,9 @@ var Cmd = &Z.Cmd{
 		pomo.Cmd,
 		git.Cmd,
 	},
+  Shortcuts: Z.ArgMap{
+    "pull": {"git", "pull"},
+    "push": {"git", "push"},
+    "pushf": {"git", "push", "force"},
+  },
 }
