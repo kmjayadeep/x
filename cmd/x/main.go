@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kmjayadeep/x/pkg/git"
+	"github.com/kmjayadeep/x/pkg/net"
 	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/weather"
 	Z "github.com/rwxrob/bonzai/z"
@@ -24,6 +25,7 @@ var Cmd = &Z.Cmd{
 		git.Cmd,
 		weather.Cmd,
 		env.Cmd,
+    net.Cmd, // Network utilities
 	},
 	Shortcuts: Z.ArgMap{
 		// Git
@@ -33,5 +35,8 @@ var Cmd = &Z.Cmd{
 
 		// Weather
 		"weat": {"weather", "basic"},
+
+    // Network
+    "ip": {"net", "ip"},
 	},
 }
