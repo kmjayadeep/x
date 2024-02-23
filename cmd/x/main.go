@@ -1,9 +1,10 @@
 package main
 
 import (
+	"github.com/kmjayadeep/x/pkg/clip"
+	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/git"
 	"github.com/kmjayadeep/x/pkg/net"
-	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/weather"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
@@ -25,7 +26,8 @@ var Cmd = &Z.Cmd{
 		git.Cmd,
 		weather.Cmd,
 		env.Cmd,
-    net.Cmd, // Network utilities
+		net.Cmd,  // Network utilities
+		clip.Cmd, // Clipboard - copy and paste
 	},
 	Shortcuts: Z.ArgMap{
 		// Git
@@ -36,7 +38,11 @@ var Cmd = &Z.Cmd{
 		// Weather
 		"weat": {"weather", "basic"},
 
-    // Network
-    "ip": {"net", "ip"},
+		// Network
+		"ip": {"net", "ip"},
+
+		// Copy & Paste
+		"c": {"clip", "copy"},
+		"v": {"clip", "paste"},
 	},
 }

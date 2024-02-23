@@ -11,6 +11,7 @@ require (
 require (
 	github.com/a8m/envsubst v1.3.0 // indirect
 	github.com/alecthomas/participle/v2 v2.0.0-beta.5 // indirect
+	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/elliotchance/orderedmap v1.5.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
