@@ -17,18 +17,18 @@ var Cmd = &Z.Cmd{
 }
 
 func getFile() (string, error) {
-  dir := os.Getenv("PSUITE_NOTES_DIR")
+	dir := os.Getenv("PSUITE_NOTES_DIR")
 
-  cmd := exec.Command("fzf","--preview", fmt.Sprintf(`bat --style numbers,changes --color always %s/{}`,dir))
-  cmd.Dir = dir
-  cmd.Stdin = os.Stdin
-  cmd.Stderr = os.Stderr
-  out, err := cmd.Output()
-  if err != nil {
-    return "", err
-  }
+	cmd := exec.Command("fzf", "--preview", fmt.Sprintf(`bat --style numbers,changes --color always %s/{}`, dir))
+	cmd.Dir = dir
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+	out, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
 
-  return dir+"/"+strings.TrimSpace(string(out)), nil
+	return dir + "/" + strings.TrimSpace(string(out)), nil
 }
 
 var editCmd = &Z.Cmd{
@@ -36,11 +36,11 @@ var editCmd = &Z.Cmd{
 	Summary:  `Edit notes`,
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(_ *Z.Cmd, args ...string) error {
-    f, err := getFile()
-    if err != nil {
-      return err
-    }
-    fmt.Println(f)
+		f, err := getFile()
+		if err != nil {
+			return err
+		}
+		fmt.Println(f)
 		return nil
 	},
 }

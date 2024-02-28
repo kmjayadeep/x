@@ -6,8 +6,8 @@ import (
 	"github.com/kmjayadeep/x/pkg/git"
 	"github.com/kmjayadeep/x/pkg/net"
 	"github.com/kmjayadeep/x/pkg/notes"
-	"github.com/kmjayadeep/x/pkg/weather"
 	"github.com/kmjayadeep/x/pkg/pomo"
+	"github.com/kmjayadeep/x/pkg/weather"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
 )
@@ -27,8 +27,8 @@ var Cmd = &Z.Cmd{
 		env.Cmd,
 		net.Cmd,  // Network utilities
 		clip.Cmd, // Clipboard - copy and paste
-    notes.Cmd,
-    pomo.Cmd,
+		notes.Cmd,
+		pomo.Cmd,
 	},
 	Shortcuts: Z.ArgMap{
 		// Git

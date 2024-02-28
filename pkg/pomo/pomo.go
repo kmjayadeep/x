@@ -16,7 +16,7 @@ var (
 	Warn       = "1m"
 	Prefix     = "🍅"
 	PrefixWarn = "💢"
-  WarnTime = 5 * time.Minute
+	WarnTime   = 5 * time.Minute
 )
 
 func init() {
@@ -26,27 +26,27 @@ func init() {
 var Cmd = &Z.Cmd{
 	Name: `pomo`,
 	Commands: []*Z.Cmd{
-		printCmd,                     // default
+		printCmd, // default
 		help.Cmd, vars.Cmd,
 		initCmd, startCmd, stopCmd,
 	},
 }
 
 var initCmd = &Z.Cmd{
-	Name:        `init`,
-  Summary: `Initialize pomo`,
-	Commands:    []*Z.Cmd{help.Cmd},
+	Name:     `init`,
+	Summary:  `Initialize pomo`,
+	Commands: []*Z.Cmd{help.Cmd},
 
 	Call: func(x *Z.Cmd, _ ...string) error {
-    return nil
+		return nil
 	},
 }
 
 var printCmd = &Z.Cmd{
-	Name:        `print`,
-	Aliases:     []string{`show`, `p`},
-	Commands:    []*Z.Cmd{help.Cmd},
-	Summary:     `Print pomo status`,
+	Name:     `print`,
+	Aliases:  []string{`show`, `p`},
+	Commands: []*Z.Cmd{help.Cmd},
+	Summary:  `Print pomo status`,
 
 	Call: func(x *Z.Cmd, _ ...string) error {
 
@@ -65,30 +65,41 @@ var printCmd = &Z.Cmd{
 
 		sec := time.Second
 		left := endt.Sub(time.Now()).Round(sec)
-    prefix := Prefix
-
+		prefix := Prefix
 
 		if left < WarnTime && left%(sec*2) == 0 {
 			prefix = PrefixWarn
 		}
 
-    if left > 0 {
-      term.Printf("%v%v", prefix, to.StopWatch(left))
-      return nil
-    }
+		if left > 0 {
+			term.Printf("%v%v", prefix, to.StopWatch(left))
+			return nil
+		}
 
-    term.Printf("%v%v", prefix, "Pomo up!")
+		term.Printf("%v%v", prefix, "Pomo up!")
+
+		notified, err := x.Caller.Get("notified")
+		if err != nil {
+			return err
+		}
+
+		if notified == "" {
+			if err := Z.Exec("notify-send", "-u", "critical", "Pomo time up"); err != nil {
+				return err
+			}
+			return x.Caller.Set("notified", "1")
+		}
 
 		return nil
 	},
 }
 
 var startCmd = &Z.Cmd{
-	Name:        `start`,
-	Usage:       `[help|hour|DURATION]`,
-	Commands:    []*Z.Cmd{help.Cmd},
-	Params:      []string{`hour`},
-	MaxArgs:     1,
+	Name:     `start`,
+	Usage:    `[help|hour|DURATION]`,
+	Commands: []*Z.Cmd{help.Cmd},
+	Params:   []string{`hour`},
+	MaxArgs:  1,
 
 	Call: func(x *Z.Cmd, args ...string) error {
 		if len(args) > 0 {
@@ -112,17 +123,17 @@ var startCmd = &Z.Cmd{
 			return err
 		}
 		started := time.Now().Add(dur).Format(time.RFC3339)
-    if err := x.Caller.Del("notified"); err != nil {
-      return err
-    }
+		if err := x.Caller.Del("notified"); err != nil {
+			return err
+		}
 		return x.Caller.Set("started", started)
 	},
 }
 
 var stopCmd = &Z.Cmd{
-	Name:        `stop`,
-	Commands:    []*Z.Cmd{help.Cmd},
-	Summary:     `Stop pomo clock`,
+	Name:     `stop`,
+	Commands: []*Z.Cmd{help.Cmd},
+	Summary:  `Stop pomo clock`,
 
 	Call: func(x *Z.Cmd, args ...string) error {
 		x.Caller.Del("started")
