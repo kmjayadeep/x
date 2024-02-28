@@ -11,4 +11,5 @@ fmt:
 	go fmt ./...
 
 install: build
-	install x ~/.local/bin
+	mkdir -p ~/.local/bin
+	install x ~/.local/bin/x

@@ -33,7 +33,7 @@
             pkgs.makeWrapper
           ];
           postInstall = ''
-            wrapProgram $out/bin/x --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git ]}
+            wrapProgram $out/bin/x --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.git pkgs.fzf pkgs.bat]}
           '';
         };
       });

@@ -5,15 +5,14 @@ import (
 	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/git"
 	"github.com/kmjayadeep/x/pkg/net"
+	"github.com/kmjayadeep/x/pkg/notes"
 	"github.com/kmjayadeep/x/pkg/weather"
+	"github.com/kmjayadeep/x/pkg/pomo"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
-	"github.com/rwxrob/pomo"
 )
 
 func main() {
-	pomo.Duration = "30m"
-	pomo.Interval = ""
 	Cmd.Run()
 }
 
@@ -28,6 +27,8 @@ var Cmd = &Z.Cmd{
 		env.Cmd,
 		net.Cmd,  // Network utilities
 		clip.Cmd, // Clipboard - copy and paste
+    notes.Cmd,
+    pomo.Cmd,
 	},
 	Shortcuts: Z.ArgMap{
 		// Git
