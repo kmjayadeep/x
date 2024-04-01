@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kmjayadeep/x/pkg/clip"
+	"github.com/kmjayadeep/x/pkg/date"
 	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/git"
 	"github.com/kmjayadeep/x/pkg/net"
@@ -29,6 +30,7 @@ var Cmd = &Z.Cmd{
 		clip.Cmd, // Clipboard - copy and paste
 		notes.Cmd,
 		pomo.Cmd,
+		date.Cmd,
 	},
 	Shortcuts: Z.ArgMap{
 		// Git
@@ -45,5 +47,9 @@ var Cmd = &Z.Cmd{
 		// Copy & Paste
 		"c": {"clip", "copy"},
 		"v": {"clip", "paste"},
+
+		// Date
+		"d":  {"date", "min"},
+		"dt": {"date", "datetime"},
 	},
 }
