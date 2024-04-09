@@ -11,7 +11,7 @@ import (
 var Cmd = &Z.Cmd{
 	Name:     `git`,
 	Summary:  `git extensions`,
-	Commands: []*Z.Cmd{help.Cmd, pushCmd, pullCmd},
+	Commands: []*Z.Cmd{help.Cmd, pushCmd, pullCmd, filtersCmd},
 }
 
 var pushCmd = &Z.Cmd{

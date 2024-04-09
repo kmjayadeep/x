@@ -37,6 +37,7 @@ var Cmd = &Z.Cmd{
 		"pull":  {"git", "pull"},
 		"push":  {"git", "push"},
 		"pushf": {"git", "push", "force"},
+		"tf":    {"git", "filter", "tf"},
 
 		// Weather
 		"weat": {"weather", "basic"},
