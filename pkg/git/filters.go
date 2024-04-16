@@ -26,7 +26,7 @@ var tfFilter = &Z.Cmd{
 			return err
 		}
 		fmt.Println(
-			"<details><summary>Terraform Plan</summary>\n" +
+			"<details><summary>Terraform Plan</summary>\n\n" +
 				"```hcl\n" +
 				string(stdin) +
 				"\n```\n" +

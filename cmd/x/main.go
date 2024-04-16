@@ -54,5 +54,6 @@ var Cmd = &Z.Cmd{
 		"d":  {"date", "min"},
 		"dt": {"date", "datetime"},
 		"df": {"date", "full"},
+		"dh": {"date", "head"},
 	},
 }
