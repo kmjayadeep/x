@@ -5,6 +5,7 @@ import (
 	"github.com/kmjayadeep/x/pkg/date"
 	"github.com/kmjayadeep/x/pkg/env"
 	"github.com/kmjayadeep/x/pkg/git"
+	"github.com/kmjayadeep/x/pkg/kubeseal"
 	"github.com/kmjayadeep/x/pkg/net"
 	"github.com/kmjayadeep/x/pkg/notes"
 	"github.com/kmjayadeep/x/pkg/pomo"
@@ -31,6 +32,7 @@ var Cmd = &Z.Cmd{
 		notes.Cmd,
 		pomo.Cmd,
 		date.Cmd,
+		kubeseal.Cmd,
 	},
 	Shortcuts: Z.ArgMap{
 		// Git
@@ -55,5 +57,8 @@ var Cmd = &Z.Cmd{
 		"dt": {"date", "datetime"},
 		"df": {"date", "full"},
 		"dh": {"date", "head"},
+
+		// kubeseal
+		"seal": {"kubeseal", "seal"},
 	},
 }
