@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/atotto/clipboard v0.1.4
-	github.com/rwxrob/bonzai v0.20.10
+	github.com/rwxrob/bonzai v0.37.0
 	github.com/rwxrob/dtime v0.1.1
 	github.com/rwxrob/help v0.7.2
 	github.com/rwxrob/term v0.2.9
