@@ -10,8 +10,8 @@ import (
 	"github.com/kmjayadeep/x/pkg/notes"
 	"github.com/kmjayadeep/x/pkg/pomo"
 	"github.com/kmjayadeep/x/pkg/weather"
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
 )
 
 func main() {

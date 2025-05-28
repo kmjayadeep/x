@@ -3,12 +3,12 @@ package pomo
 import (
 	"time"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/dtime"
-	"github.com/rwxrob/help"
-	"github.com/rwxrob/term"
-	"github.com/rwxrob/to"
-	"github.com/rwxrob/vars"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/rwxrob/bonzai/vars"
+	"github.com/rwxrob/bonzai/to"
+	"github.com/rwxrob/bonzai/term"
+	"github.com/rwxrob/bonzai/dtime"
 )
 
 var (

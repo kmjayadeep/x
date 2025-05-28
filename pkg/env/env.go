@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
-	"github.com/rwxrob/term"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/rwxrob/bonzai/term"
 )
 
 var Cmd = &Z.Cmd{

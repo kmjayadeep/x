@@ -5,9 +5,9 @@ import (
 	"os"
 	"os/exec"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
-	"github.com/rwxrob/vars"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/rwxrob/bonzai/vars"
 )
 
 func init() {

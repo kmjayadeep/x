@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/atotto/clipboard"
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
 )
 
 var Cmd = &Z.Cmd{
