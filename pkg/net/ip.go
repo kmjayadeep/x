@@ -12,15 +12,15 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `net`,
-	Summary:  `Network related utilities`,
-	Commands: []*Z.Cmd{help.Cmd, ipCmd},
+	Short:  `Network related utilities`,
+	Cmds: []*Z.Cmd{help.Cmd, ipCmd},
 }
 
 var ipCmd = &Z.Cmd{
 	Name:     `ip`,
-	Summary:  `Get public ip`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Short:  `Get public ip`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, args ...string) error {
 
 		url := "https://ipconfig.io"
 

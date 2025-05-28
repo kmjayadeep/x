@@ -15,13 +15,13 @@ import (
 )
 
 func main() {
-	Cmd.Run()
+	Cmd.Exec()
 }
 
 var Cmd = &Z.Cmd{
 	Name:    "x",
-	Summary: "JD's bonzai command tree",
-	Commands: []*Z.Cmd{
+	Short: "bonzai command tree by JD",
+	Cmds: []*Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
 		git.Cmd,
@@ -34,31 +34,31 @@ var Cmd = &Z.Cmd{
 		date.Cmd,
 		kubeseal.Cmd,
 	},
-	Shortcuts: Z.ArgMap{
-		// Git
-		"pull":  {"git", "pull"},
-		"push":  {"git", "push"},
-		"pushf": {"git", "push", "force"},
-		"tf":    {"git", "filter", "tf"},
-		"code":  {"git", "filter", "code"},
+	// Shortcuts: Z.ArgMap{
+	//   // Git
+	//   "pull":  {"git", "pull"},
+	//   "push":  {"git", "push"},
+	//   "pushf": {"git", "push", "force"},
+	//   "tf":    {"git", "filter", "tf"},
+	//   "code":  {"git", "filter", "code"},
 
-		// Weather
-		"weat": {"weather", "basic"},
+	//   // Weather
+	//   "weat": {"weather", "basic"},
 
-		// Network
-		"ip": {"net", "ip"},
+	//   // Network
+	//   "ip": {"net", "ip"},
 
-		// Copy & Paste
-		"c": {"clip", "copy"},
-		"v": {"clip", "paste"},
+	//   // Copy & Paste
+	//   "c": {"clip", "copy"},
+	//   "v": {"clip", "paste"},
 
-		// Date
-		"d":  {"date", "min"},
-		"dt": {"date", "datetime"},
-		"df": {"date", "full"},
-		"dh": {"date", "head"},
+	//   // Date
+	//   "d":  {"date", "min"},
+	//   "dt": {"date", "datetime"},
+	//   "df": {"date", "full"},
+	//   "dh": {"date", "head"},
 
-		// kubeseal
-		"seal": {"kubeseal", "seal"},
-	},
+	//   // kubeseal
+	//   "seal": {"kubeseal", "seal"},
+	// },
 }

@@ -12,8 +12,8 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `notes`,
-	Summary:  `Manage notes`,
-	Commands: []*Z.Cmd{help.Cmd, editCmd},
+	Short:  `Manage notes`,
+	Cmds: []*Z.Cmd{help.Cmd, editCmd},
 }
 
 func getFile() (string, error) {
@@ -33,9 +33,9 @@ func getFile() (string, error) {
 
 var editCmd = &Z.Cmd{
 	Name:     `edit`,
-	Summary:  `Edit notes`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Short:  `Edit notes`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, args ...string) error {
 		f, err := getFile()
 		if err != nil {
 			return err

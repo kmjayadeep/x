@@ -12,15 +12,15 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `clip`,
-	Summary:  `Manage Clipboard`,
-	Commands: []*Z.Cmd{help.Cmd, copyCmd, pasteCmd},
+	Short:  `Manage Clipboard`,
+	Cmds: []*Z.Cmd{help.Cmd, copyCmd, pasteCmd},
 }
 
 var copyCmd = &Z.Cmd{
 	Name:     `copy`,
-	Summary:  `Copy to clipboard`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Short:  `Copy to clipboard`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, args ...string) error {
 		out, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
@@ -34,9 +34,9 @@ var copyCmd = &Z.Cmd{
 
 var pasteCmd = &Z.Cmd{
 	Name:     `paste`,
-	Summary:  `Paste from clipboard`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Short:  `Paste from clipboard`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, args ...string) error {
 		out, err := clipboard.ReadAll()
 		if err != nil {
 			return err

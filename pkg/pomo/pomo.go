@@ -9,6 +9,7 @@ import (
 	"github.com/rwxrob/bonzai/to"
 	"github.com/rwxrob/bonzai/term"
 	"github.com/rwxrob/bonzai/dtime"
+	"github.com/rwxrob/bonzai/run"
 )
 
 var (
@@ -19,13 +20,9 @@ var (
 	WarnTime   = 5 * time.Minute
 )
 
-func init() {
-	Z.Vars.SoftInit()
-}
-
 var Cmd = &Z.Cmd{
 	Name: `pomo`,
-	Commands: []*Z.Cmd{
+	Cmds: []*Z.Cmd{
 		printCmd, // default
 		help.Cmd, vars.Cmd,
 		initCmd, startCmd, stopCmd,
@@ -34,26 +31,23 @@ var Cmd = &Z.Cmd{
 
 var initCmd = &Z.Cmd{
 	Name:     `init`,
-	Summary:  `Initialize pomo`,
-	Commands: []*Z.Cmd{help.Cmd},
+	Short:  `Initialize pomo`,
+	Cmds: []*Z.Cmd{help.Cmd},
 
-	Call: func(x *Z.Cmd, _ ...string) error {
+	Do: func(x *Z.Cmd, _ ...string) error {
 		return nil
 	},
 }
 
 var printCmd = &Z.Cmd{
 	Name:     `print`,
-	Aliases:  []string{`show`, `p`},
-	Commands: []*Z.Cmd{help.Cmd},
-	Summary:  `Print pomo status`,
+	Alias:  `show|p`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Short:  `Print pomo status`,
 
-	Call: func(x *Z.Cmd, _ ...string) error {
+	Do: func(x *Z.Cmd, _ ...string) error {
 
-		started, err := x.Caller.Get(`started`)
-		if err != nil {
-			return err
-		}
+		started := x.Caller().Get(`started`)
 		if started == "" {
 			return nil
 		}
@@ -78,16 +72,14 @@ var printCmd = &Z.Cmd{
 
 		term.Printf("%v%v", prefix, "Pomo up!")
 
-		notified, err := x.Caller.Get("notified")
-		if err != nil {
-			return err
-		}
+		notified := x.Caller().Get("notified")
 
 		if notified == "" {
-			if err := Z.Exec("notify-send", "-u", "critical", "Pomo time up"); err != nil {
+			if err := run.Exec("notify-send", "-u", "critical", "Pomo time up"); err != nil {
 				return err
 			}
-			return x.Caller.Set("notified", "1")
+			x.Caller().Set("notified", "1")
+			return nil
 		}
 
 		return nil
@@ -97,24 +89,19 @@ var printCmd = &Z.Cmd{
 var startCmd = &Z.Cmd{
 	Name:     `start`,
 	Usage:    `[help|hour|DURATION]`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Params:   []string{`hour`},
+	Cmds: []*Z.Cmd{help.Cmd},
+	// Params:   []string{`hour`},
 	MaxArgs:  1,
 
-	Call: func(x *Z.Cmd, args ...string) error {
+	Do: func(x *Z.Cmd, args ...string) error {
 		if len(args) > 0 {
 			if args[0] == `hour` {
 				t := time.Now()
 				args[0] = dtime.Until(dtime.NextHourOf, &t).String()
 			}
-			if err := x.Caller.Set("duration", args[0]); err != nil {
-				return err
-			}
+			x.Caller().Set("duration", args[0])
 		}
-		s, err := x.Caller.Get("duration")
-		if err != nil {
-			return err
-		}
+		s := x.Caller().Get("duration")
 		if s == "" {
 			s = Duration
 		}
@@ -123,20 +110,20 @@ var startCmd = &Z.Cmd{
 			return err
 		}
 		started := time.Now().Add(dur).Format(time.RFC3339)
-		if err := x.Caller.Del("notified"); err != nil {
-			return err
-		}
-		return x.Caller.Set("started", started)
+		x.Caller().Set("notified","")
+		x.Caller().Set("started", started)
+		return nil
 	},
 }
 
 var stopCmd = &Z.Cmd{
 	Name:     `stop`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Summary:  `Stop pomo clock`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Short:  `Stop pomo clock`,
 
-	Call: func(x *Z.Cmd, args ...string) error {
-		x.Caller.Del("started")
-		return x.Caller.Del("notified")
+	Do: func(x *Z.Cmd, args ...string) error {
+		x.Caller().Set("started","")
+		x.Caller().Set("notified","")
+		return nil
 	},
 }

@@ -11,15 +11,15 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `weather`,
-	Summary:  `Get weather based on current location`,
-	Commands: []*Z.Cmd{help.Cmd, basicCmd},
+	Short:  `Get weather based on current location`,
+	Cmds: []*Z.Cmd{help.Cmd, basicCmd},
 }
 
 var basicCmd = &Z.Cmd{
 	Name:     `basic`,
-	Summary:  `Basic weather info`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(x *Z.Cmd, args ...string) error {
+	Short:  `Basic weather info`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(x *Z.Cmd, args ...string) error {
 
 		url := "https://wttr.in?format=3"
 
