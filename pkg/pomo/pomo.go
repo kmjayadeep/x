@@ -5,11 +5,11 @@ import (
 
 	Z "github.com/rwxrob/bonzai"
 	"github.com/rwxrob/bonzai/cmds/help"
-	"github.com/rwxrob/bonzai/vars"
 	"github.com/rwxrob/bonzai/to"
 	"github.com/rwxrob/bonzai/term"
 	"github.com/rwxrob/bonzai/dtime"
 	"github.com/rwxrob/bonzai/run"
+	"github.com/rwxrob/bonzai/persisters/inprops"
 )
 
 var (
@@ -20,18 +20,33 @@ var (
 	WarnTime   = 5 * time.Minute
 )
 
-var Cmd = &Z.Cmd{
+var Cmd = Z.Cmd{
 	Name: `pomo`,
 	Cmds: []*Z.Cmd{
 		printCmd, // default
-		help.Cmd, vars.Cmd,
+		help.Cmd,
 		initCmd, startCmd, stopCmd,
 	},
-}
+	Vars: Z.Vars{
+		{
+			K:  `duration`,
+			S:  `Duration of pomo timer (default: 30m)`,
+			P: true,
+		},{
+			K: `notified`,
+			S: `Set to 1 when notification has been sent`,
+			P: true,
+		},{
+			K: `started`,
+			S: `Time when pomo was started (RFC3339 format)`,
+			P: true,
+		},
+	},
+}.WithPersister(inprops.NewUserCache("x","pomo"))
 
 var initCmd = &Z.Cmd{
 	Name:     `init`,
-	Short:  `Initialize pomo`,
+	Short:  `initialize pomo`,
 	Cmds: []*Z.Cmd{help.Cmd},
 
 	Do: func(x *Z.Cmd, _ ...string) error {
@@ -43,7 +58,7 @@ var printCmd = &Z.Cmd{
 	Name:     `print`,
 	Alias:  `show|p`,
 	Cmds: []*Z.Cmd{help.Cmd},
-	Short:  `Print pomo status`,
+	Short:  `print pomo status`,
 
 	Do: func(x *Z.Cmd, _ ...string) error {
 
@@ -119,7 +134,7 @@ var startCmd = &Z.Cmd{
 var stopCmd = &Z.Cmd{
 	Name:     `stop`,
 	Cmds: []*Z.Cmd{help.Cmd},
-	Short:  `Stop pomo clock`,
+	Short:  `stop pomo clock`,
 
 	Do: func(x *Z.Cmd, args ...string) error {
 		x.Caller().Set("started","")

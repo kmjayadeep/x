@@ -69,6 +69,8 @@ github.com/rwxrob/bonzai/mark v0.12.0 h1:QcEHpvHEw9FdDRiwyPgP3DJtqh4wwj4EtBRu+Mu
 github.com/rwxrob/bonzai/mark v0.12.0/go.mod h1:GdAvnKu/QlWqzfOn6ouSqs3KTlFOLZbbvxKSyKq0GFo=
 github.com/rwxrob/bonzai/mark/funcs v0.8.6 h1:NtU9AA+PjvC2wxoMwdkkmN1DlyLPpXSNJNzujhA09cg=
 github.com/rwxrob/bonzai/mark/funcs v0.8.6/go.mod h1:vHy/0M887S9KoMSh007MmJdNG788jbmwGjo/FNdtRfk=
+github.com/rwxrob/bonzai/persisters/inprops v0.3.0 h1:J0HQxE6sRicr0I5T3uRy7jJcHU8KW2xp+pCSC0mFR/Q=
+github.com/rwxrob/bonzai/persisters/inprops v0.3.0/go.mod h1:s36Pw5L5iAWZicbef6uzQZIOxUId+5cVp5BO1oYWHY8=
 github.com/rwxrob/bonzai/run v0.7.0 h1:rP1GPxkLocijBVEs58duMymKTiyQfbthfoAh7VoThG0=
 github.com/rwxrob/bonzai/run v0.7.0/go.mod h1:KhMNAJ3t78LDAHur60xiGA564UejG69PgV51k2QjXD8=
 github.com/rwxrob/bonzai/scanner v0.1.0 h1:xPf5817Mt0lkm2GvygJIGBqq0sS7thvh5ceK3RjWhkQ=

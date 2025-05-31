@@ -1,6 +1,6 @@
 module github.com/kmjayadeep/x
 
-go 1.23.0
+go 1.23.4
 
 toolchain go1.24.2
 
@@ -9,6 +9,7 @@ require (
 	github.com/rwxrob/bonzai v0.56.6
 	github.com/rwxrob/bonzai/cmds/help v0.8.2
 	github.com/rwxrob/bonzai/dtime v0.1.0
+	github.com/rwxrob/bonzai/persisters/inprops v0.3.0
 	github.com/rwxrob/bonzai/run v0.7.0
 	github.com/rwxrob/bonzai/term v0.2.1
 	github.com/rwxrob/bonzai/to v0.6.1

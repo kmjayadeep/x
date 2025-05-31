@@ -107,6 +107,9 @@ github.com/rwxrob/bonzai/mark
 # github.com/rwxrob/bonzai/mark/funcs v0.8.6
 ## explicit; go 1.23.0
 github.com/rwxrob/bonzai/mark/funcs
+# github.com/rwxrob/bonzai/persisters/inprops v0.3.0
+## explicit; go 1.23.4
+github.com/rwxrob/bonzai/persisters/inprops
 # github.com/rwxrob/bonzai/run v0.7.0
 ## explicit; go 1.23.0
 github.com/rwxrob/bonzai/run
