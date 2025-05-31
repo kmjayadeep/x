@@ -34,25 +34,4 @@ var Cmd = &Z.Cmd{
 		date.Cmd, date.DateHeadCmd,
 		kubeseal.Cmd,
 	},
-	// Shortcuts: Z.ArgMap{
-	//   // Git
-	//   "pull":  {"git", "pull"},
-	//   "push":  {"git", "push"},
-	//   "pushf": {"git", "push", "force"},
-	//   "tf":    {"git", "filter", "tf"},
-	//   "code":  {"git", "filter", "code"},
-
-	//   // Weather
-	//   "weat": {"weather", "basic"},
-
-	//   // Network
-	//   "ip": {"net", "ip"},
-
-	//   // Date
-	//   "d":  {"date", "min"},
-	//   "dt": {"date", "datetime"},
-	//   "df": {"date", "full"},
-	//   "dh": {"date", "head"},
-
-	// },
 }

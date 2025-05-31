@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	Z "github.com/rwxrob/bonzai"
 	"github.com/rwxrob/bonzai/cmds/help"
@@ -11,14 +12,15 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `weather`,
-	Short:  `Get weather based on current location`,
-	Cmds: []*Z.Cmd{help.Cmd, basicCmd},
+	Alias: `weat`,
+	Short:  `get weather based on current location`,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), basicCmd},
+	Def: basicCmd,
 }
 
 var basicCmd = &Z.Cmd{
 	Name:     `basic`,
-	Short:  `Basic weather info`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Short:  `basic weather info`,
 	Do: func(x *Z.Cmd, args ...string) error {
 
 		url := "https://wttr.in?format=3"
@@ -33,7 +35,7 @@ var basicCmd = &Z.Cmd{
 		if err != nil {
 			return err
 		}
-		fmt.Println(string(body))
+		fmt.Print(strings.TrimSpace(string(body)))
 		return nil
 	},
 }
