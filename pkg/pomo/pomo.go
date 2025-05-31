@@ -12,6 +12,8 @@ import (
 	"github.com/rwxrob/bonzai/persisters/inprops"
 )
 
+var props = inprops.NewUserCache("x", "pomo.props")
+
 var (
 	Duration   = "30m"
 	Warn       = "1m"
@@ -20,29 +22,15 @@ var (
 	WarnTime   = 5 * time.Minute
 )
 
-var Cmd = Z.Cmd{
+var Cmd = &Z.Cmd{
 	Name: `pomo`,
 	Cmds: []*Z.Cmd{
-		printCmd, // default
+		printCmd,
 		help.Cmd,
 		initCmd, startCmd, stopCmd,
 	},
-	Vars: Z.Vars{
-		{
-			K:  `duration`,
-			S:  `Duration of pomo timer (default: 30m)`,
-			P: true,
-		},{
-			K: `notified`,
-			S: `Set to 1 when notification has been sent`,
-			P: true,
-		},{
-			K: `started`,
-			S: `Time when pomo was started (RFC3339 format)`,
-			P: true,
-		},
-	},
-}.WithPersister(inprops.NewUserCache("x","pomo"))
+	Def: printCmd,
+}
 
 var initCmd = &Z.Cmd{
 	Name:     `init`,
@@ -62,7 +50,7 @@ var printCmd = &Z.Cmd{
 
 	Do: func(x *Z.Cmd, _ ...string) error {
 
-		started := x.Caller().Get(`started`)
+		started := props.Get("started")
 		if started == "" {
 			return nil
 		}
@@ -87,13 +75,13 @@ var printCmd = &Z.Cmd{
 
 		term.Printf("%v%v", prefix, "Pomo up!")
 
-		notified := x.Caller().Get("notified")
+		notified := props.Get("notified")
 
 		if notified == "" {
 			if err := run.Exec("notify-send", "-u", "critical", "Pomo time up"); err != nil {
 				return err
 			}
-			x.Caller().Set("notified", "1")
+			props.Set("notified", "1")
 			return nil
 		}
 
@@ -114,9 +102,9 @@ var startCmd = &Z.Cmd{
 				t := time.Now()
 				args[0] = dtime.Until(dtime.NextHourOf, &t).String()
 			}
-			x.Caller().Set("duration", args[0])
+			props.Set("duration", args[0])
 		}
-		s := x.Caller().Get("duration")
+		s := props.Get("duration")
 		if s == "" {
 			s = Duration
 		}
@@ -125,8 +113,8 @@ var startCmd = &Z.Cmd{
 			return err
 		}
 		started := time.Now().Add(dur).Format(time.RFC3339)
-		x.Caller().Set("notified","")
-		x.Caller().Set("started", started)
+		props.Set("notified","")
+		props.Set("started", started)
 		return nil
 	},
 }
@@ -137,8 +125,8 @@ var stopCmd = &Z.Cmd{
 	Short:  `stop pomo clock`,
 
 	Do: func(x *Z.Cmd, args ...string) error {
-		x.Caller().Set("started","")
-		x.Caller().Set("notified","")
+		props.Set("started","")
+		props.Set("notified","")
 		return nil
 	},
 }
