@@ -14,6 +14,7 @@ var Cmd = &Z.Cmd{
 	Name:     `env`,
 	Short:  `commands for environment variables`,
 	Cmds: []*Z.Cmd{getCmd, dataCmd, help.Cmd},
+	Def: dataCmd,
 }
 
 var dataCmd = &Z.Cmd{

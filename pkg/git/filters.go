@@ -11,15 +11,16 @@ import (
 
 var filtersCmd = &Z.Cmd{
 	Name:     `filter`,
-	Short:  `Filters useful for git`,
-	Cmds: []*Z.Cmd{help.Cmd, tfFilter, codeFilter},
+	Short:  `filters useful for git`,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), tfFilter, codeFilter},
 }
 
 var tfFilter = &Z.Cmd{
 	Name:     `tf`,
-	Short:  `Wrap terraform plan input around <detail> tag with summary`,
+	Short  : `wrap terraform plan in markdown`,
+	Long:  `wrap terraform plan input around <detail> tag with summary`,
 	MaxArgs:  0,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(x *Z.Cmd, args ...string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
@@ -37,9 +38,9 @@ var tfFilter = &Z.Cmd{
 
 var codeFilter = &Z.Cmd{
 	Name:     `code`,
-	Short:  `Wrap input around markcode code syntax`,
+	Short:  `wrap input around markcode code syntax`,
 	MaxArgs:  1,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(x *Z.Cmd, args ...string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
