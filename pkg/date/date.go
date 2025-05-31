@@ -11,13 +11,15 @@ import (
 var Cmd = &Z.Cmd{
 	Name:     `date`,
 	Short:  `date util commands`,
-	Cmds: []*Z.Cmd{help.Cmd, dateCmd, dateTimeCmd, dateFull, dateHeadCmd},
+	Alias: `d`,
+	Def: dateCmd,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), dateCmd, dateTimeCmd, dateFull, DateHeadCmd},
 }
 
 var dateCmd = &Z.Cmd{
 	Name:     `min`,
 	Short:  `display date in YYY-MM-DD format`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006/01/02")
 		fmt.Println(d)
@@ -28,7 +30,7 @@ var dateCmd = &Z.Cmd{
 var dateFull = &Z.Cmd{
 	Name:     `full`,
 	Short:  `display date in YYY MMM DD format`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006 Jan 02")
 		fmt.Println(d)
@@ -39,7 +41,7 @@ var dateFull = &Z.Cmd{
 var dateTimeCmd = &Z.Cmd{
 	Name:     `datetime`,
 	Short:  `display date and time in YYY-MM-DD HH:MM format`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006/01/02 03:04PM")
 		fmt.Println(d)
@@ -47,10 +49,11 @@ var dateTimeCmd = &Z.Cmd{
 	},
 }
 
-var dateHeadCmd = &Z.Cmd{
-	Name:     `head`,
+var DateHeadCmd = &Z.Cmd{
+	Name:     `datehead`,
 	Short:  `display date in a human readable form for headings`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Alias: `dh`,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006 January 02, Monday")
 		fmt.Println(d)

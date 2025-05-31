@@ -31,7 +31,7 @@ var Cmd = &Z.Cmd{
 		clip.Cmd, clip.CopyCmd, // Clipboard - copy and paste
 		notes.Cmd,
 		pomo.Cmd,
-		date.Cmd,
+		date.Cmd, date.DateHeadCmd,
 		kubeseal.Cmd,
 	},
 	// Shortcuts: Z.ArgMap{
