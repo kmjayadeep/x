@@ -12,13 +12,13 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `clip`,
-	Short:  `Manage Clipboard`,
+	Short:  `manage Clipboard`,
 	Cmds: []*Z.Cmd{help.Cmd, copyCmd, pasteCmd},
 }
 
 var copyCmd = &Z.Cmd{
 	Name:     `copy`,
-	Short:  `Copy to clipboard`,
+	Short:  `copy to clipboard`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		out, err := io.ReadAll(os.Stdin)
@@ -34,7 +34,7 @@ var copyCmd = &Z.Cmd{
 
 var pasteCmd = &Z.Cmd{
 	Name:     `paste`,
-	Short:  `Paste from clipboard`,
+	Short:  `paste from clipboard`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		out, err := clipboard.ReadAll()
