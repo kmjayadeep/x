@@ -5,23 +5,24 @@ import (
 	"os"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
-	"github.com/rwxrob/term"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/rwxrob/bonzai/term"
 )
 
 var Cmd = &Z.Cmd{
 	Name:     `env`,
-	Summary:  `commands for environment variables`,
-	Commands: []*Z.Cmd{getCmd, dataCmd, help.Cmd},
+	Short:  `commands for environment variables`,
+	Cmds: []*Z.Cmd{getCmd, dataCmd, help.Cmd},
+	Def: dataCmd,
 }
 
 var dataCmd = &Z.Cmd{
 	Name:     `data`,
-	Aliases:  []string{`all`},
-	Summary:  `print environment data to stdout`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, _ ...string) error {
+	Alias:  `all`,
+	Short:  `print environment data to stdout`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, _ ...string) error {
 		for _, pair := range os.Environ() {
 			fmt.Println(pair)
 		}
@@ -32,10 +33,10 @@ var dataCmd = &Z.Cmd{
 var getCmd = &Z.Cmd{
 	Name:     `get`,
 	Usage:    `(help|NAME)`,
-	Summary:  `print specified environment variable to stdout`,
-	Commands: []*Z.Cmd{help.Cmd},
+	Short:  `print specified environment variable to stdout`,
+	Cmds: []*Z.Cmd{help.Cmd},
 	NumArgs:  1,
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Do: func(_ *Z.Cmd, args ...string) error {
 		v := os.Getenv(args[0])
 		if v == "" {
 			v = os.Getenv(strings.ToUpper(args[0]))

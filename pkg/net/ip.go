@@ -6,21 +6,21 @@ import (
 	"net/http"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
 )
 
 var Cmd = &Z.Cmd{
 	Name:     `net`,
-	Summary:  `Network related utilities`,
-	Commands: []*Z.Cmd{help.Cmd, ipCmd},
+	Short:  `network related utilities`,
+	Cmds: []*Z.Cmd{help.Cmd, ipCmd},
 }
 
 var ipCmd = &Z.Cmd{
 	Name:     `ip`,
-	Summary:  `Get public ip`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(_ *Z.Cmd, args ...string) error {
+	Short:  `get public ip`,
+	Cmds: []*Z.Cmd{help.Cmd},
+	Do: func(_ *Z.Cmd, args ...string) error {
 
 		url := "https://ipconfig.io"
 

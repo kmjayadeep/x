@@ -5,22 +5,23 @@ import (
 	"io"
 	"os"
 
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
 )
 
 var filtersCmd = &Z.Cmd{
 	Name:     `filter`,
-	Summary:  `Filters useful for git`,
-	Commands: []*Z.Cmd{help.Cmd, tfFilter, codeFilter},
+	Short:  `filters useful for git`,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), tfFilter, codeFilter},
 }
 
 var tfFilter = &Z.Cmd{
 	Name:     `tf`,
-	Summary:  `Wrap terraform plan input around <detail> tag with summary`,
+	Short  : `wrap terraform plan in markdown`,
+	Long:  `wrap terraform plan input around <detail> tag with summary`,
 	MaxArgs:  0,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(x *Z.Cmd, args ...string) error {
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
+	Do: func(x *Z.Cmd, args ...string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
@@ -37,10 +38,10 @@ var tfFilter = &Z.Cmd{
 
 var codeFilter = &Z.Cmd{
 	Name:     `code`,
-	Summary:  `Wrap input around markcode code syntax`,
+	Short:  `wrap input around markcode code syntax`,
 	MaxArgs:  1,
-	Commands: []*Z.Cmd{help.Cmd},
-	Call: func(x *Z.Cmd, args ...string) error {
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
+	Do: func(x *Z.Cmd, args ...string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err

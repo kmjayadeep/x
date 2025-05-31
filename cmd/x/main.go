@@ -10,55 +10,28 @@ import (
 	"github.com/kmjayadeep/x/pkg/notes"
 	"github.com/kmjayadeep/x/pkg/pomo"
 	"github.com/kmjayadeep/x/pkg/weather"
-	Z "github.com/rwxrob/bonzai/z"
-	"github.com/rwxrob/help"
+	Z "github.com/rwxrob/bonzai"
+	"github.com/rwxrob/bonzai/cmds/help"
 )
 
 func main() {
-	Cmd.Run()
+	Cmd.Exec()
 }
 
 var Cmd = &Z.Cmd{
 	Name:    "x",
-	Summary: "JD's bonzai command tree",
-	Commands: []*Z.Cmd{
+	Short: "bonzai command tree by JD",
+	Cmds: []*Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
 		git.Cmd,
 		weather.Cmd,
 		env.Cmd,
 		net.Cmd,  // Network utilities
-		clip.Cmd, // Clipboard - copy and paste
+		clip.Cmd, clip.CopyCmd, // Clipboard - copy and paste
 		notes.Cmd,
 		pomo.Cmd,
-		date.Cmd,
+		date.Cmd, date.DateHeadCmd,
 		kubeseal.Cmd,
-	},
-	Shortcuts: Z.ArgMap{
-		// Git
-		"pull":  {"git", "pull"},
-		"push":  {"git", "push"},
-		"pushf": {"git", "push", "force"},
-		"tf":    {"git", "filter", "tf"},
-		"code":  {"git", "filter", "code"},
-
-		// Weather
-		"weat": {"weather", "basic"},
-
-		// Network
-		"ip": {"net", "ip"},
-
-		// Copy & Paste
-		"c": {"clip", "copy"},
-		"v": {"clip", "paste"},
-
-		// Date
-		"d":  {"date", "min"},
-		"dt": {"date", "datetime"},
-		"df": {"date", "full"},
-		"dh": {"date", "head"},
-
-		// kubeseal
-		"seal": {"kubeseal", "seal"},
 	},
 }
