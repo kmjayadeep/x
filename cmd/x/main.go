@@ -28,7 +28,7 @@ var Cmd = &Z.Cmd{
 		weather.Cmd,
 		env.Cmd,
 		net.Cmd,  // Network utilities
-		clip.Cmd, // Clipboard - copy and paste
+		clip.Cmd, clip.CopyCmd, // Clipboard - copy and paste
 		notes.Cmd,
 		pomo.Cmd,
 		date.Cmd,
@@ -48,17 +48,11 @@ var Cmd = &Z.Cmd{
 	//   // Network
 	//   "ip": {"net", "ip"},
 
-	//   // Copy & Paste
-	//   "c": {"clip", "copy"},
-	//   "v": {"clip", "paste"},
-
 	//   // Date
 	//   "d":  {"date", "min"},
 	//   "dt": {"date", "datetime"},
 	//   "df": {"date", "full"},
 	//   "dh": {"date", "head"},
 
-	//   // kubeseal
-	//   "seal": {"kubeseal", "seal"},
 	// },
 }

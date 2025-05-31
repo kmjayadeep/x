@@ -10,13 +10,13 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `date`,
-	Short:  `Date util commands`,
+	Short:  `date util commands`,
 	Cmds: []*Z.Cmd{help.Cmd, dateCmd, dateTimeCmd, dateFull, dateHeadCmd},
 }
 
 var dateCmd = &Z.Cmd{
 	Name:     `min`,
-	Short:  `Display date in YYY-MM-DD format`,
+	Short:  `display date in YYY-MM-DD format`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006/01/02")
@@ -27,7 +27,7 @@ var dateCmd = &Z.Cmd{
 
 var dateFull = &Z.Cmd{
 	Name:     `full`,
-	Short:  `Display date in YYY MMM DD format`,
+	Short:  `display date in YYY MMM DD format`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006 Jan 02")
@@ -38,7 +38,7 @@ var dateFull = &Z.Cmd{
 
 var dateTimeCmd = &Z.Cmd{
 	Name:     `datetime`,
-	Short:  `Display date and time in YYY-MM-DD HH:MM format`,
+	Short:  `display date and time in YYY-MM-DD HH:MM format`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006/01/02 03:04PM")
@@ -49,7 +49,7 @@ var dateTimeCmd = &Z.Cmd{
 
 var dateHeadCmd = &Z.Cmd{
 	Name:     `head`,
-	Short:  `Display date in a human readable form for headings`,
+	Short:  `display date in a human readable form for headings`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		d := time.Now().Format("2006 January 02, Monday")

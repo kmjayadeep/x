@@ -13,13 +13,14 @@ import (
 var Cmd = &Z.Cmd{
 	Name:     `clip`,
 	Short:  `manage Clipboard`,
-	Cmds: []*Z.Cmd{help.Cmd, copyCmd, pasteCmd},
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), CopyCmd, PasteCmd},
 }
 
-var copyCmd = &Z.Cmd{
+var CopyCmd = &Z.Cmd{
 	Name:     `copy`,
-	Short:  `copy to clipboard`,
-	Cmds: []*Z.Cmd{help.Cmd},
+	Short:  `copy to clipboard (also a subdomannd of clip)`,
+	Alias: `c`,
+	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
 	Do: func(_ *Z.Cmd, args ...string) error {
 		out, err := io.ReadAll(os.Stdin)
 		if err != nil {
@@ -32,7 +33,7 @@ var copyCmd = &Z.Cmd{
 	},
 }
 
-var pasteCmd = &Z.Cmd{
+var PasteCmd = &Z.Cmd{
 	Name:     `paste`,
 	Short:  `paste from clipboard`,
 	Cmds: []*Z.Cmd{help.Cmd},
