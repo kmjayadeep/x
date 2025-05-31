@@ -12,13 +12,13 @@ import (
 
 var Cmd = &Z.Cmd{
 	Name:     `net`,
-	Short:  `Network related utilities`,
+	Short:  `network related utilities`,
 	Cmds: []*Z.Cmd{help.Cmd, ipCmd},
 }
 
 var ipCmd = &Z.Cmd{
 	Name:     `ip`,
-	Short:  `Get public ip`,
+	Short:  `get public ip`,
 	Cmds: []*Z.Cmd{help.Cmd},
 	Do: func(_ *Z.Cmd, args ...string) error {
 
