@@ -13,7 +13,7 @@ require (
 	github.com/rwxrob/bonzai/run v0.7.0
 	github.com/rwxrob/bonzai/term v0.2.1
 	github.com/rwxrob/bonzai/to v0.6.1
-	github.com/rwxrob/bonzai/vars v0.12.0
+	github.com/rwxrob/bonzai/vars v0.13.0
 )
 
 require (

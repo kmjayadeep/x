@@ -85,6 +85,8 @@ github.com/rwxrob/bonzai/uniq v0.1.0 h1:xOlTWnaotslv1I0Nc+3+qXHxecoxNSROo871S2m3
 github.com/rwxrob/bonzai/uniq v0.1.0/go.mod h1:RsSPso5Dhs1tYEjhuVA4b8DM5l0pQPhGebm8Lx5XHc8=
 github.com/rwxrob/bonzai/vars v0.12.0 h1:msctDUZGwJlt+PDotIenZlyvdaOFKzNlpL3t+2YD5Gk=
 github.com/rwxrob/bonzai/vars v0.12.0/go.mod h1:LXKW2bHJ5anJhHFc7Gp26F83qyS0DjRnY3BClcZPlsE=
+github.com/rwxrob/bonzai/vars v0.13.0 h1:8Exj2o/YrS5sJkJwOPPebC27k3cqBtt0WZV/UAorlyY=
+github.com/rwxrob/bonzai/vars v0.13.0/go.mod h1:LXKW2bHJ5anJhHFc7Gp26F83qyS0DjRnY3BClcZPlsE=
 github.com/yuin/goldmark v1.7.1/go.mod h1:uzxRWxtg69N339t3louHJ7+O03ezfj6PlliRlaOzY1E=
 github.com/yuin/goldmark v1.7.8 h1:iERMLn0/QJeHFhxSt3p6PeN9mGnvIKSpG9YYorDMnic=
 github.com/yuin/goldmark v1.7.8/go.mod h1:uzxRWxtg69N339t3louHJ7+O03ezfj6PlliRlaOzY1E=

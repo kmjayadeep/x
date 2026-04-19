@@ -126,7 +126,7 @@ github.com/rwxrob/bonzai/to
 # github.com/rwxrob/bonzai/uniq v0.1.0
 ## explicit; go 1.23.0
 github.com/rwxrob/bonzai/uniq
-# github.com/rwxrob/bonzai/vars v0.12.0
+# github.com/rwxrob/bonzai/vars v0.13.0
 ## explicit; go 1.23.0
 github.com/rwxrob/bonzai/vars
 # github.com/yuin/goldmark v1.7.8
