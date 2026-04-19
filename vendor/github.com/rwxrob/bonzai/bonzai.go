@@ -126,6 +126,7 @@ type Cmd struct {
 	hidden   bool            // see [AsHidden] and [IsHidden]
 	cmdAlias map[string]*Cmd // see [cacheCmdAlias]
 	vars     map[string]*Var // see [Vars]
+	varsMu   sync.RWMutex    // protects vars map
 }
 
 type Vars []Var
@@ -285,8 +286,9 @@ func (x Cmd) WithPersister(a Persister) *Cmd {
 // safe for concurrency but persisters must implement their own
 // file-level locking if shared between multiple processes.
 func (x *Cmd) Get(key string) string {
-	// declaration is mandatory
+	x.varsMu.RLock()
 	v, has := x.vars[key]
+	x.varsMu.RUnlock()
 	if !has {
 		panic(`developer-error: not declared in Vars: ` + key)
 	}
@@ -350,9 +352,9 @@ func (x *Cmd) Get(key string) string {
 // Panics if key was not declared in [Cmd].Vars. Locks the Var in
 // question so safe for concurrency.
 func (x *Cmd) Set(key, value string) {
-
-	// declaration is mandatory
+	x.varsMu.RLock()
 	v, has := x.vars[key]
+	x.varsMu.RUnlock()
 	if !has {
 		panic(`developer-error: not declared in Vars: ` + key)
 	}
@@ -642,6 +644,19 @@ func (x *Cmd) Run(args ...string) error {
 // for [Cmd]. It takes a command [*Cmd] and a variadic number of string
 // arguments and always returns nil, indicating no operation is performed.
 var Nothing = func(*Cmd, ...string) error { return nil }
+
+// Would is a no-op function that implements the command function signature
+// for [Cmd] like Nothing but also prints a string if provided.
+var Would = func(x *Cmd, args ...string) error {
+	message := `would ` + x.Name
+	if len(args) > 0 {
+		message = args[0]
+		return nil
+	}
+	fmt.Println(message)
+	return nil
+}
+var Wood = Would // just for fun
 
 // Validate checks the integrity of the command. It verifies that
 // the command is not nil, validates the length and format of the
@@ -999,6 +1014,7 @@ func (x *Cmd) resolveInheritedVars() {
 }
 
 func (x *Cmd) cacheVars() {
+	x.varsMu.Lock()
 	x.vars = make(map[string]*Var, len(x.Vars))
 	if x.Persist != nil {
 		x.Persist.Setup()
@@ -1006,18 +1022,24 @@ func (x *Cmd) cacheVars() {
 	for _, v := range x.Vars {
 		if len(v.I) > 0 {
 			x.vars[v.I] = &v
-			// have to put off X assignment until after callers resolved
 			continue
 		}
 		x.vars[v.K] = &v
-		if v.R && len(x.Get(v.K)) == 0 {
-			panic(`required variable not set: ` + v.K)
-		}
-		if v.G != nil {
-			*(v.G) = x.Get(v.K)
-		}
 	}
 	x.Vars = nil
+	x.varsMu.Unlock()
+
+	for k, v := range x.vars {
+		if v.I != "" {
+			continue
+		}
+		if v.R && len(x.Get(k)) == 0 {
+			panic(`required variable not set: ` + k)
+		}
+		if v.G != nil {
+			*(v.G) = x.Get(k)
+		}
+	}
 }
 
 // Path returns the path of commands used to arrive at this command.

@@ -68,7 +68,7 @@ github.com/rogpeppe/go-internal/internal/syscall/windows
 github.com/rogpeppe/go-internal/internal/syscall/windows/sysdll
 github.com/rogpeppe/go-internal/lockedfile
 github.com/rogpeppe/go-internal/lockedfile/internal/filelock
-# github.com/rwxrob/bonzai v0.56.6
+# github.com/rwxrob/bonzai v0.57.0
 ## explicit; go 1.23.0
 github.com/rwxrob/bonzai
 # github.com/rwxrob/bonzai/cmds/help v0.8.2
