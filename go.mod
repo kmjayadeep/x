@@ -7,7 +7,7 @@ toolchain go1.24.2
 require (
 	github.com/atotto/clipboard v0.1.4
 	github.com/rwxrob/bonzai v0.56.6
-	github.com/rwxrob/bonzai/cmds/help v0.8.2
+	github.com/rwxrob/bonzai/cmds/help v0.9.0
 	github.com/rwxrob/bonzai/dtime v0.1.0
 	github.com/rwxrob/bonzai/persisters/inprops v0.3.0
 	github.com/rwxrob/bonzai/run v0.7.0
