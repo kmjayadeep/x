@@ -2,7 +2,7 @@ module github.com/kmjayadeep/x
 
 go 1.23.4
 
-toolchain go1.24.2
+toolchain go1.26.5
 
 require (
 	github.com/atotto/clipboard v0.1.4
