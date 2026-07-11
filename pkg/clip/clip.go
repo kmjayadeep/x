@@ -6,22 +6,20 @@ import (
 	"os"
 
 	"github.com/atotto/clipboard"
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `clip`,
-	Short:  `manage Clipboard`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), CopyCmd, PasteCmd},
+var Cmd = &cobra.Command{
+	Use:   "clip",
+	Short: "manage clipboard",
 }
 
-var CopyCmd = &Z.Cmd{
-	Name:     `copy`,
-	Short:  `copy to clipboard (also a subdomannd of clip)`,
-	Alias: `c`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var CopyCmd = &cobra.Command{
+	Use:     "copy",
+	Aliases: []string{"c"},
+	Short:   "copy stdin to clipboard",
+	Args:    cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		out, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
@@ -33,11 +31,11 @@ var CopyCmd = &Z.Cmd{
 	},
 }
 
-var PasteCmd = &Z.Cmd{
-	Name:     `paste`,
-	Short:  `paste from clipboard`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var PasteCmd = &cobra.Command{
+	Use:   "paste",
+	Short: "paste from clipboard",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		out, err := clipboard.ReadAll()
 		if err != nil {
 			return err
@@ -46,3 +44,5 @@ var PasteCmd = &Z.Cmd{
 		return nil
 	},
 }
+
+func init() { Cmd.AddCommand(CopyCmd, PasteCmd) }

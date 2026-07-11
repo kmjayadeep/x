@@ -6,36 +6,39 @@ import (
 	"net/http"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `weather`,
-	Alias: `weat`,
-	Short:  `get weather based on current location`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), basicCmd},
-	Def: basicCmd,
+var Cmd = &cobra.Command{
+	Use:     "weather",
+	Aliases: []string{"weat"},
+	Short:   "get weather based on current location",
+	RunE:    getWeather,
 }
 
-var basicCmd = &Z.Cmd{
-	Name:     `basic`,
-	Short:  `basic weather info`,
-	Do: func(x *Z.Cmd, args ...string) error {
-
-		url := "https://wttr.in?format=3"
-
-		response, err := http.Get(url)
-		if err != nil {
-			return err
-		}
-		defer response.Body.Close()
-
-		body, err := io.ReadAll(response.Body)
-		if err != nil {
-			return err
-		}
-		fmt.Print(strings.TrimSpace(string(body)))
-		return nil
-	},
+var basicCmd = &cobra.Command{
+	Use:   "basic",
+	Short: "basic weather info",
+	Args:  cobra.NoArgs,
+	RunE:  getWeather,
 }
+
+func getWeather(_ *cobra.Command, _ []string) error {
+
+	url := "https://wttr.in?format=3"
+
+	response, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+	fmt.Print(strings.TrimSpace(string(body)))
+	return nil
+}
+
+func init() { Cmd.AddCommand(basicCmd) }

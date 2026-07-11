@@ -1,12 +1,10 @@
 package git
 
-import (
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
-)
+import "github.com/spf13/cobra"
 
-var Cmd = &Z.Cmd{
-	Name:     `git`,
-	Short:  `git extensions`,
-	Cmds: []*Z.Cmd{help.Cmd, filtersCmd},
+var Cmd = &cobra.Command{
+	Use:   "git",
+	Short: "git extensions",
 }
+
+func init() { Cmd.AddCommand(filtersCmd) }

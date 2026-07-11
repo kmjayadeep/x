@@ -5,43 +5,42 @@ import (
 	"os"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
-	"github.com/rwxrob/bonzai/term"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `env`,
-	Short:  `commands for environment variables`,
-	Cmds: []*Z.Cmd{getCmd, dataCmd, help.Cmd},
-	Def: dataCmd,
+var Cmd = &cobra.Command{
+	Use:   "env",
+	Short: "commands for environment variables",
+	RunE:  printData,
 }
 
-var dataCmd = &Z.Cmd{
-	Name:     `data`,
-	Alias:  `all`,
-	Short:  `print environment data to stdout`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	Do: func(_ *Z.Cmd, _ ...string) error {
-		for _, pair := range os.Environ() {
-			fmt.Println(pair)
-		}
-		return nil
-	},
+var dataCmd = &cobra.Command{
+	Use:     "data",
+	Aliases: []string{"all"},
+	Short:   "print environment data to stdout",
+	Args:    cobra.NoArgs,
+	RunE:    printData,
 }
 
-var getCmd = &Z.Cmd{
-	Name:     `get`,
-	Usage:    `(help|NAME)`,
-	Short:  `print specified environment variable to stdout`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	NumArgs:  1,
-	Do: func(_ *Z.Cmd, args ...string) error {
+func printData(_ *cobra.Command, _ []string) error {
+	for _, pair := range os.Environ() {
+		fmt.Println(pair)
+	}
+	return nil
+}
+
+var getCmd = &cobra.Command{
+	Use:   "get NAME",
+	Short: "print specified environment variable to stdout",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(_ *cobra.Command, args []string) error {
 		v := os.Getenv(args[0])
 		if v == "" {
 			v = os.Getenv(strings.ToUpper(args[0]))
 		}
-		_, err := term.Print(v)
+		_, err := fmt.Print(v)
 		return err
 	},
 }
+
+func init() { Cmd.AddCommand(getCmd, dataCmd) }

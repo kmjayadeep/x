@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/kmjayadeep/x/pkg/clip"
 	"github.com/kmjayadeep/x/pkg/date"
 	"github.com/kmjayadeep/x/pkg/env"
@@ -10,28 +13,32 @@ import (
 	"github.com/kmjayadeep/x/pkg/notes"
 	"github.com/kmjayadeep/x/pkg/pomo"
 	"github.com/kmjayadeep/x/pkg/weather"
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
 func main() {
-	Cmd.Exec()
+	if err := Cmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
 
-var Cmd = &Z.Cmd{
-	Name:    "x",
-	Short: "bonzai command tree by JD",
-	Cmds: []*Z.Cmd{
-		help.Cmd,
+var Cmd = &cobra.Command{
+	Use:           "x",
+	Short:         "command tree by JD",
+	SilenceErrors: true,
+}
+
+func init() {
+	Cmd.AddCommand(
 		pomo.Cmd,
 		git.Cmd,
 		weather.Cmd,
 		env.Cmd,
-		net.Cmd,  // Network utilities
+		net.Cmd,                // Network utilities
 		clip.Cmd, clip.CopyCmd, // Clipboard - copy and paste
 		notes.Cmd,
-		pomo.Cmd,
 		date.Cmd, date.DateHeadCmd,
 		kubeseal.Cmd,
-	},
+	)
 }

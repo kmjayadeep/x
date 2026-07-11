@@ -5,23 +5,20 @@ import (
 	"io"
 	"os"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var filtersCmd = &Z.Cmd{
-	Name:     `filter`,
-	Short:  `filters useful for git`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), tfFilter, codeFilter},
+var filtersCmd = &cobra.Command{
+	Use:   "filter",
+	Short: "filters useful for git",
 }
 
-var tfFilter = &Z.Cmd{
-	Name:     `tf`,
-	Short  : `wrap terraform plan in markdown`,
-	Long:  `wrap terraform plan input around <detail> tag with summary`,
-	MaxArgs:  0,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(x *Z.Cmd, args ...string) error {
+var tfFilter = &cobra.Command{
+	Use:   "tf",
+	Short: "wrap terraform plan in markdown",
+	Long:  "Wrap terraform plan input in a <details> tag with a summary.",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
@@ -36,12 +33,11 @@ var tfFilter = &Z.Cmd{
 	},
 }
 
-var codeFilter = &Z.Cmd{
-	Name:     `code`,
-	Short:  `wrap input around markcode code syntax`,
-	MaxArgs:  1,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(x *Z.Cmd, args ...string) error {
+var codeFilter = &cobra.Command{
+	Use:   "code [language]",
+	Short: "wrap input in a Markdown code block",
+	Args:  cobra.MaximumNArgs(1),
+	RunE: func(_ *cobra.Command, args []string) error {
 		stdin, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
@@ -57,3 +53,5 @@ var codeFilter = &Z.Cmd{
 		return nil
 	},
 }
+
+func init() { filtersCmd.AddCommand(tfFilter, codeFilter) }

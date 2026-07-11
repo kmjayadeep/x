@@ -6,14 +6,12 @@ import (
 	"os/exec"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `notes`,
-	Short:  `Manage notes`,
-	Cmds: []*Z.Cmd{help.Cmd, editCmd},
+var Cmd = &cobra.Command{
+	Use:   "notes",
+	Short: "manage notes",
 }
 
 func getFile() (string, error) {
@@ -31,11 +29,11 @@ func getFile() (string, error) {
 	return dir + "/" + strings.TrimSpace(string(out)), nil
 }
 
-var editCmd = &Z.Cmd{
-	Name:     `edit`,
-	Short:  `Edit notes`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var editCmd = &cobra.Command{
+	Use:   "edit",
+	Short: "edit notes",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		f, err := getFile()
 		if err != nil {
 			return err
@@ -44,3 +42,5 @@ var editCmd = &Z.Cmd{
 		return nil
 	},
 }
+
+func init() { Cmd.AddCommand(editCmd) }

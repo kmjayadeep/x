@@ -5,50 +5,51 @@ import (
 	"os"
 	"os/exec"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
-	"github.com/rwxrob/bonzai/persisters/inprops"
-	"github.com/rwxrob/bonzai/term"
-	"github.com/rwxrob/bonzai/vars"
+	"github.com/kmjayadeep/x/internal/store"
+	"github.com/spf13/cobra"
 )
 
-var props = inprops.NewUserCache("x", "kubeseal.props")
+var props = store.New("kubeseal.json")
 
-var Cmd = &Z.Cmd{
-	Name:    `kubeseal`,
-	Short: `kubeseal helper commands`,
-	Alias: `seal`,
-	Usage: `kubeseal [cert-path]`,
-	Long: `Helper commands instead of kubeseal.
+var Cmd = &cobra.Command{
+	Use:     "kubeseal [cert-path]",
+	Short:   "kubeseal helper commands",
+	Aliases: []string{"seal"},
+	Long: `Helper commands for kubeseal.
      https://github.com/bitnami-labs/sealed-secrets/
      Cert path is cached after first use`,
-	Def: sealCmd,
-	Cmds: []*Z.Cmd{help.Cmd, sealCmd, vars.Cmd},
+	Args: cobra.MaximumNArgs(1),
+	RunE: seal,
 }
 
-var sealCmd = &Z.Cmd{
-	Name:     `seal`,
-	Short:  `Seal given secret`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	Do: func(x *Z.Cmd, args ...string) error {
-		if len(args) > 0 {
-			props.Set(`kubeseal-cert`, args[0])
-		}
-
-		cert := props.Get(`kubeseal-cert`)
-		if cert == "" {
-			_ ,err := term.Print(`No cert path provided. Please provide the path to the kubeseal certificate.`)
-			return err
-		}
-
-		cmd := exec.Command("kubeseal", "--format=yaml", "--cert="+cert)
-		cmd.Stdin = os.Stdin
-		cmd.Stderr = os.Stderr
-		out, err := cmd.Output()
-		if err != nil {
-			return err
-		}
-		fmt.Println(string(out))
-		return nil
-	},
+var sealCmd = &cobra.Command{
+	Use:   "seal [cert-path]",
+	Short: "seal the secret read from stdin",
+	Args:  cobra.MaximumNArgs(1),
+	RunE:  seal,
 }
+
+func seal(_ *cobra.Command, args []string) error {
+	if len(args) > 0 {
+		if err := props.Set("kubeseal-cert", args[0]); err != nil {
+			return err
+		}
+	}
+
+	cert := props.Get(`kubeseal-cert`)
+	if cert == "" {
+		return fmt.Errorf("no cert path provided; pass the path to the kubeseal certificate")
+	}
+
+	cmd := exec.Command("kubeseal", "--format=yaml", "--cert="+cert)
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+	out, err := cmd.Output()
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(out))
+	return nil
+}
+
+func init() { Cmd.AddCommand(sealCmd) }

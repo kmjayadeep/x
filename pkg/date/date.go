@@ -4,59 +4,61 @@ import (
 	"fmt"
 	"time"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `date`,
-	Short:  `date util commands`,
-	Alias: `d`,
-	Def: dateCmd,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden(), dateCmd, dateTimeCmd, dateFull, DateHeadCmd},
+var Cmd = &cobra.Command{
+	Use:     "date",
+	Aliases: []string{"d"},
+	Short:   "date utility commands",
+	RunE:    printMin,
 }
 
-var dateCmd = &Z.Cmd{
-	Name:     `min`,
-	Short:  `display date in YYY-MM-DD format`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(_ *Z.Cmd, args ...string) error {
-		d := time.Now().Format("2006/01/02")
-		fmt.Println(d)
-		return nil
-	},
+var dateCmd = &cobra.Command{
+	Use:   "min",
+	Short: "display date in YYYY/MM/DD format",
+	Args:  cobra.NoArgs,
+	RunE:  printMin,
 }
 
-var dateFull = &Z.Cmd{
-	Name:     `full`,
-	Short:  `display date in YYY MMM DD format`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(_ *Z.Cmd, args ...string) error {
+func printMin(_ *cobra.Command, _ []string) error {
+	d := time.Now().Format("2006/01/02")
+	fmt.Println(d)
+	return nil
+}
+
+var dateFull = &cobra.Command{
+	Use:   "full",
+	Short: "display date in YYYY MMM DD format",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		d := time.Now().Format("2006 Jan 02")
 		fmt.Println(d)
 		return nil
 	},
 }
 
-var dateTimeCmd = &Z.Cmd{
-	Name:     `datetime`,
-	Short:  `display date and time in YYY-MM-DD HH:MM format`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var dateTimeCmd = &cobra.Command{
+	Use:   "datetime",
+	Short: "display date and time in YYYY/MM/DD HH:MM format",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		d := time.Now().Format("2006/01/02 03:04PM")
 		fmt.Println(d)
 		return nil
 	},
 }
 
-var DateHeadCmd = &Z.Cmd{
-	Name:     `datehead`,
-	Short:  `display date in a human readable form for headings`,
-	Alias: `dh`,
-	Cmds: []*Z.Cmd{help.Cmd.AsHidden()},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var DateHeadCmd = &cobra.Command{
+	Use:     "datehead",
+	Aliases: []string{"dh"},
+	Short:   "display date in a human-readable form for headings",
+	Args:    cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 		d := time.Now().Format("2006 January 02, Monday")
 		fmt.Println(d)
 		return nil
 	},
 }
+
+func init() { Cmd.AddCommand(dateCmd, dateTimeCmd, dateFull, DateHeadCmd) }

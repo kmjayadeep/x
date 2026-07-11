@@ -6,21 +6,19 @@ import (
 	"net/http"
 	"strings"
 
-	Z "github.com/rwxrob/bonzai"
-	"github.com/rwxrob/bonzai/cmds/help"
+	"github.com/spf13/cobra"
 )
 
-var Cmd = &Z.Cmd{
-	Name:     `net`,
-	Short:  `network related utilities`,
-	Cmds: []*Z.Cmd{help.Cmd, ipCmd},
+var Cmd = &cobra.Command{
+	Use:   "net",
+	Short: "network-related utilities",
 }
 
-var ipCmd = &Z.Cmd{
-	Name:     `ip`,
-	Short:  `get public ip`,
-	Cmds: []*Z.Cmd{help.Cmd},
-	Do: func(_ *Z.Cmd, args ...string) error {
+var ipCmd = &cobra.Command{
+	Use:   "ip",
+	Short: "get public IP",
+	Args:  cobra.NoArgs,
+	RunE: func(_ *cobra.Command, _ []string) error {
 
 		url := "https://ipconfig.io"
 
@@ -38,3 +36,5 @@ var ipCmd = &Z.Cmd{
 		return nil
 	},
 }
+
+func init() { Cmd.AddCommand(ipCmd) }

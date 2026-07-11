@@ -1,5 +1,5 @@
 {
-  description = "JD's bonzai command tree";
+  description = "JD's command-line utility collection";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
