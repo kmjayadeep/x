@@ -23,5 +23,5 @@ go.work
 # Flake output
 result
 
-# Binary
-x
+# Root build artifact
+/x

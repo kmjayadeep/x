@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime/debug"
 
 	"github.com/kmjayadeep/x/pkg/clip"
 	"github.com/kmjayadeep/x/pkg/date"
@@ -16,6 +17,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "dev"
+
 func main() {
 	if err := Cmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -26,7 +29,18 @@ func main() {
 var Cmd = &cobra.Command{
 	Use:           "x",
 	Short:         "command tree by JD",
+	Version:       buildVersion(),
 	SilenceErrors: true,
+}
+
+func buildVersion() string {
+	if version != "dev" {
+		return version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" && info.Main.Version != "(devel)" {
+		return info.Main.Version
+	}
+	return version
 }
 
 func init() {

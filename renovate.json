@@ -1,6 +1,31 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "labels": ["dependencies"],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Zurich",
+  "rangeStrategy": "bump",
+  "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"],
+  "packageRules": [
+    {
+      "description": "Regenerate the checked-in vendor directory for Go updates",
+      "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"]
+    },
+    {
+      "description": "Automerge low-risk maintenance after CI",
+      "matchUpdateTypes": ["digest", "patch", "minor", "pin", "lockFileMaintenance"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "Group GitHub Actions maintenance",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    }
   ]
 }
